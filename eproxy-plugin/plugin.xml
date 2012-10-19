@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="com.github.aneveux.eproxy.StartupExtension">
+      </startup>
+   </extension>
+   <extension
+         id="com.github.aneveux.eproxy.ActionSet"
+         name="Easy Proxy"
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="Ease your proxy management inside Eclipse !"
+            id="com.github.aneveux.eproxy.ActionSet"
+            label="Easy Proxy"
+            visible="true">
+         <action
+               class="com.github.aneveux.eproxy.MenuActionExtension"
+               icon="icons/proxy.png"
+               id="com.github.aneveux.eproxy.onMenuElement"
+               label="Easy Proxy"
+               style="push"
+               toolbarPath="com.github.aneveux.eproxy.actionsetmenu/actionset.separator"
+               tooltip="Ease your proxy management inside Eclipse !">
+         </action>
+         <menu
+               id="com.github.aneveux.eproxy.actionsetmenu"
+               label="Easy Proxy">
+            <separator
+                  name="actionset.separator">
+            </separator>
+         </menu>
+      </actionSet>
+   </extension>
+
+</plugin>
