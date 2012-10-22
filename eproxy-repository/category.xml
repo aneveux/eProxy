@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+	<feature
+		url="features/com.github.aneveux.eproxy.features_1.0.0.qualifier.jar"
+		id="com.github.aneveux.eproxy.feature" version="1.0.0.qualifier">
+		<category name="eProxy" />
+	</feature>
+	<category-def name="eProxy" label="eProxy">
+		<description>
+			eProxy is an user-friendly wizard in order to ease the proxy management
+			inside Eclipse.
+		</description>
+	</category-def>
+</site>
