@@ -1,7 +1,9 @@
-package com.github.aneveux.eproxy.data;
+package com.github.aneveux.eproxy.api;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.github.aneveux.eproxy.data.EProxy;
 
 public class EProxyBuilder {
 
