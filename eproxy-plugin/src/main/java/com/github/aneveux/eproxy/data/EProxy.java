@@ -88,6 +88,17 @@ public class EProxy {
 	protected String[] nonProxyHosts;
 
 	/**
+	* Default constructor
+	*/
+	public EProxy () {
+		this.reference = "PROXY-"+System.currentTimeMillis();
+		this.host = new String();
+		this.port = 0;
+		this.authenticationRequired = false;
+		this.nonProxyHosts = new String[0];
+	}
+
+	/**
 	 * @return the reference
 	 */
 	public String getReference() {
