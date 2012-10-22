@@ -21,10 +21,10 @@
 
 	<licenses>
 		<license>
-			<name>LGPL 2.1</name>
-			<url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+			<name>BSD License</name>
+			<url>http://www.opensource.org/licenses/bsd-license.php</url>
 			<distribution>repo</distribution>
-			<comments>GNU LESSER GENERAL PUBLIC LICENSE</comments>
+			<comments>BSD License</comments>
 		</license>
 	</licenses>
 
@@ -44,6 +44,7 @@
 	</developers>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.15.0</tycho-version>
 		<eclipse-mirror>http://eclipse.ialto.com</eclipse-mirror>
 		<eclipse-site>${eclipse-mirror}/releases/${platform-version-name}</eclipse-site>
@@ -130,6 +131,41 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<inherited>false</inherited>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<basedir>${basedir}</basedir>
+					<header>etc/header.txt</header>
+					<quiet>false</quiet>
+					<failIfMissing>true</failIfMissing>
+					<aggregate>true</aggregate>
+					<strictCheck>true</strictCheck>
+					<includes>
+						<include>**/src/**</include>
+					</includes>
+					<useDefaultExcludes>true</useDefaultExcludes>
+					<mapping>
+						<ecmd>XML_STYLE</ecmd>
+						<mwe>XML_STYLE</mwe>
+						<ext>SLASHSTAR_STYLE</ext>
+						<xpt>XML_STYLE</xpt>
+						<java>SLASHSTAR_STYLE</java>
+						<aj>SLASHSTAR_STYLE</aj>
+						<properties>SCRIPT_STYLE</properties>
+						<xml>XML_STYLE</xml>
+					</mapping>
+					<useDefaultMapping>false</useDefaultMapping>
+					<properties>
+						<year>2012</year>
+					</properties>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
