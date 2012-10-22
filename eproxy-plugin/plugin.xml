@@ -2,12 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="com.github.aneveux.eproxy.StartupExtension">
-      </startup>
-   </extension>
-   <extension
          id="com.github.aneveux.eproxy.ActionSet"
          name="Easy Proxy"
          point="org.eclipse.ui.actionSets">
