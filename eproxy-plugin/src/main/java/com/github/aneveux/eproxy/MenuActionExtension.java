@@ -39,15 +39,13 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-import com.github.aneveux.eproxy.core.ProxyHelper;
-import com.github.aneveux.eproxy.ui.EProxyUI;
+import com.github.aneveux.eproxy.api.EProxyWizard;
 
 public class MenuActionExtension implements IWorkbenchWindowActionDelegate {
 
 	@Override
 	public void run(IAction action) {
-		EProxyUI ui = new EProxyUI(ProxyHelper.getProxyInformation());
-		ProxyHelper.defineProxy(ui.getResult());
+		EProxyWizard.invokeDefaultWizard();
 	}
 
 	@Override
