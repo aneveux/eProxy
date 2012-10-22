@@ -54,48 +54,129 @@ import org.eclipse.ui.PlatformUI;
 import com.github.aneveux.eproxy.Activator;
 import com.github.aneveux.eproxy.data.EProxy;
 
+/**
+ * This UI element allows to display a wizard which will ask for various
+ * information related to proxies in Eclipse, all these information should fill
+ * an {@link EProxy} object
+ * 
+ * @author Antoine Neveux
+ * @version 1.0
+ * 
+ */
 public class EProxyUI {
 
+	/**
+	 * @see Display
+	 */
 	private Display display;
 
+	/**
+	 * @see Shell
+	 */
 	private Shell shell;
 
+	/**
+	 * Allows to know if this wizard can be opened or not
+	 */
 	private boolean isOpenable = true;
 
+	/**
+	 * Is used during the wizard execution in order to know when to close it
+	 */
 	private boolean keepOpen = true;
 
+	/**
+	 * {@link Label} to ask for the proxy host and port
+	 */
 	protected Label proxy;
 
+	/**
+	 * {@link Text} to get the proxy from user
+	 */
 	protected Text proxyText;
 
+	/**
+	 * Allows to know if authentication is needed or not
+	 */
 	protected Button checkbox;
 
+	/**
+	 * {@link Label} to ask for the user
+	 */
 	protected Label user;
 
+	/**
+	 * {@link Text} to get the user from user (inception)
+	 */
 	protected Text userText;
 
+	/**
+	 * {@link Label} to ask for the password
+	 */
 	protected Label password;
 
+	/**
+	 * {@link Text} to get the password from user
+	 */
 	protected Text passwordText;
 
+	/**
+	 * {@link Label} to ask for nonProxyHosts
+	 */
 	protected Label nonProxyHosts;
 
+	/**
+	 * {@link Text} to get the nonProxyHosts from user
+	 */
 	protected Text nonProxyHostsText;
 
+	/**
+	 * Save {@link Button} in order to save the user selection
+	 */
 	protected Button save;
 
+	/**
+	 * Cancel {@link Button} in order to exit the wizard without doing anything
+	 */
 	protected Button cancel;
 
+	/**
+	 * {@link EProxy} container to use in order to fill the wizard's form with
+	 * some default information
+	 */
 	protected EProxy reference;
 
+	/**
+	 * {@link EProxy} container which will contain the result of the user's
+	 * selection
+	 */
 	protected EProxy result;
 
+	/**
+	 * Allows to know if a default reference has been provided to the user or
+	 * not
+	 */
 	protected boolean isReferenceProvided;
 
+	/**
+	 * Allows to get the result of the user's selection in the {@link EProxy}
+	 * wizard
+	 * 
+	 * @return the {@link EProxy} container filled by the user's information
+	 */
 	public EProxy getResult() {
 		return this.result;
 	}
 
+	/**
+	 * <p>
+	 * Default constructor
+	 * </p>
+	 * <p>
+	 * Please note that invoking this constructor will actually run a new
+	 * {@link Thread} and display the wizard to the user
+	 * </p>
+	 */
 	public EProxyUI() {
 		this.isReferenceProvided = false;
 		this.display = (Display.getCurrent() == null) ? Display.getDefault()
@@ -108,6 +189,19 @@ public class EProxyUI {
 		});
 	}
 
+	/**
+	 * <p>
+	 * Constructor with a default {@link EProxy} container to use as default
+	 * information
+	 * </p>
+	 * <p>
+	 * Please note that invoking this constructor will actually run a new
+	 * {@link Thread} and display the wizard to the user
+	 * </p>
+	 * 
+	 * @param reference
+	 *            default information to use so as to fill the wizard's form
+	 */
 	public EProxyUI(EProxy reference) {
 		this.reference = reference;
 		this.isReferenceProvided = true;
@@ -121,6 +215,10 @@ public class EProxyUI {
 		});
 	}
 
+	/**
+	 * Allows to display the wizard and set all the listeners, and other
+	 * graphical stuff
+	 */
 	protected void display() {
 		if (this.isOpenable) {
 			this.initializeDialog();
@@ -133,6 +231,9 @@ public class EProxyUI {
 		}
 	}
 
+	/**
+	 * Allows to create the basic dialog object
+	 */
 	protected void initializeDialog() {
 		this.shell = new Shell(this.display, SWT.BORDER | SWT.APPLICATION_MODAL
 				| SWT.DIALOG_TRIM);
@@ -143,6 +244,9 @@ public class EProxyUI {
 		this.shell.setLayout(new FormLayout());
 	}
 
+	/**
+	 * Allows to open the dialog box in the center of the user's screen
+	 */
 	protected void open() {
 		this.shell.update();
 		Rectangle bounds;
@@ -166,10 +270,17 @@ public class EProxyUI {
 		this.keepOpen = true;
 	}
 
+	/**
+	 * Allows to close the wizard
+	 */
 	protected void close() {
 		this.keepOpen = false;
 	}
 
+	/**
+	 * Allows to add traverse listeners in order to react to keyboard shortcuts
+	 * such as pressing Esc.
+	 */
 	protected void addListenersToDialog() {
 		this.shell.addListener(SWT.Close, new Listener() {
 			@Override
@@ -187,6 +298,11 @@ public class EProxyUI {
 		});
 	}
 
+	/**
+	 * Allows to add listeners to some components such as the checkbox (
+	 * {@link #checkbox}) or the buttons ({@link #save}, {@link #cancel}) and
+	 * also a few validation on {@link #proxyText}
+	 */
 	protected void addListenersToComponents() {
 		this.proxyText.addModifyListener(new ModifyListener() {
 			@Override
@@ -256,6 +372,10 @@ public class EProxyUI {
 		});
 	}
 
+	/**
+	 * Allows to create the components to display in the wizard, it uses the
+	 * {@link FormDataBuilder} in order to deal with the Layout
+	 */
 	protected void createComponents() {
 		this.proxy = new Label(this.shell, SWT.NONE);
 		this.proxy.setText("Proxy: (host:port)");
@@ -307,6 +427,9 @@ public class EProxyUI {
 				.bottom().apply(this.cancel);
 	}
 
+	/**
+	 * Allows to fill the form with some default references if needed
+	 */
 	protected void displayReference() {
 		if (this.reference != null) {
 			this.proxyText.setText(this.reference.getHost() + ":"

@@ -37,25 +37,55 @@ package com.github.aneveux.eproxy.data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EProxy stands for EasyProxy and is actually a container of information in
+ * order to describe a Proxy
+ * 
+ * @author Antoine Neveux
+ * @version 1.0
+ * 
+ */
 public class EProxy {
 
+	/**
+	 * A human readable reference in order to idenfity your proxy easily if
+	 * needed
+	 */
 	protected String reference;
 
+	/**
+	 * Proxy host (Captain Obvious !)
+	 */
 	protected String host;
 
+	/**
+	 * Proxy port (Captain Obvious !)
+	 */
 	protected int port;
 
+	/**
+	 * Should be true if authentication is required by the proxy you're defining
+	 */
 	protected boolean authenticationRequired;
 
+	/**
+	 * User name if authentication is needed
+	 * 
+	 * @see #authenticationRequired
+	 */
 	protected String user;
 
+	/**
+	 * Password if authentication is needed
+	 * 
+	 * @see #authenticationRequired
+	 */
 	protected String password;
 
+	/**
+	 * All the hosts that the proxy should bypass
+	 */
 	protected String[] nonProxyHosts;
-
-	public EProxy() {
-
-	}
 
 	/**
 	 * @return the reference
@@ -181,6 +211,13 @@ public class EProxy {
 		return this;
 	}
 
+	/**
+	 * Allows to define all the nonProxyHosts from a string with hosts separated
+	 * by a comma
+	 * 
+	 * @param toParse
+	 *            a string which contains hosts separated by a comma
+	 */
 	public EProxy setNonProxyHosts(String toParse) {
 		ArrayList<String> array = new ArrayList<String>();
 		for (String s : toParse.split(","))

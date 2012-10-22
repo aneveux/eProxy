@@ -43,8 +43,25 @@ import org.osgi.framework.ServiceReference;
 import com.github.aneveux.eproxy.Activator;
 import com.github.aneveux.eproxy.data.EProxy;
 
+/**
+ * This helper class uses the Eclipse {@link IProxyService} in order to interact
+ * with the Eclipse proxy configuration, it'll provide a few methods in order to
+ * get/set the proxy from Eclipse
+ * 
+ * @author Antoine Neveux
+ * @version 1.0
+ * 
+ * @see IProxyService
+ */
 public class ProxyHelper {
 
+	/**
+	 * This technical method allows to get the Eclipse {@link IProxyService} in
+	 * order to interact with the proxy configuration from Eclipse platform
+	 * 
+	 * @return the Eclipse {@link IProxyService} to use in order to interact
+	 *         with the proxy configuration
+	 */
 	protected static IProxyService getProxyService() {
 		BundleContext bc = Activator.getDefault().getBundle()
 				.getBundleContext();
@@ -54,6 +71,15 @@ public class ProxyHelper {
 		return service;
 	}
 
+	/**
+	 * Allows to define the HTTP and HTTPS proxy in Eclipse using the
+	 * information provided in the {@link EProxy} container. It'll take care of
+	 * the host, port, authentication if needed, and nonProxyHosts
+	 * 
+	 * @param proxy
+	 *            an {@link EProxy} container to use in order to define
+	 *            Eclipse's proxy
+	 */
 	public static void defineProxy(EProxy proxy) {
 		IProxyService proxyService = getProxyService();
 		IProxyData[] proxyData = proxyService.getProxyData();
@@ -82,6 +108,13 @@ public class ProxyHelper {
 		}
 	}
 
+	/**
+	 * Allows to get the Eclipse HTTP proxy configuration in an {@link EProxy}
+	 * container
+	 * 
+	 * @return an {@link EProxy} container which contains all the actual Eclipse
+	 *         configuration for the HTTP proxy
+	 */
 	public static EProxy getProxyInformation() {
 		EProxy proxy = new EProxy();
 		proxy.setReference("HTTP-" + System.currentTimeMillis());

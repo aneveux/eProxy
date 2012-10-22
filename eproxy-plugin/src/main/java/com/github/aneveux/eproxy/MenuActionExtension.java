@@ -41,21 +41,46 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 import com.github.aneveux.eproxy.api.EProxyWizard;
 
+/**
+ * {@link MenuActionExtension} is a contribution which allows to invoke the
+ * EProxy wizard from an icon, and allows to modify the proxy
+ * 
+ * @author Antoine Neveux
+ * @version 1.0
+ * 
+ * @see IWorkbenchWindowActionDelegate
+ * 
+ */
 public class MenuActionExtension implements IWorkbenchWindowActionDelegate {
 
+	/**
+	 * This method is called while clicking on the icon, it allows to invoke the
+	 * proxy wizard in order to modify the proxy configuration
+	 * 
+	 * @see IWorkbenchWindowActionDelegate#run(IAction)
+	 */
 	@Override
 	public void run(IAction action) {
 		EProxyWizard.invokeDefaultWizard();
 	}
 
+	/**
+	 * @see IWorkbenchWindowActionDelegate#selectionChanged(IAction, ISelection)
+	 */
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
 	}
 
+	/**
+	 * @see IWorkbenchWindowActionDelegate#dispose()
+	 */
 	@Override
 	public void dispose() {
 	}
 
+	/**
+	 * @see IWorkbenchWindowActionDelegate#init(IWorkbenchWindow)
+	 */
 	@Override
 	public void init(IWorkbenchWindow window) {
 	}
