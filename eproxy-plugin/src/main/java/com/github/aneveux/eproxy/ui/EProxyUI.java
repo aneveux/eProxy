@@ -90,12 +90,27 @@ public class EProxyUI {
 
 	protected EProxy result;
 
+	protected boolean isReferenceProvided;
+
 	public EProxy getResult() {
 		return this.result;
 	}
 
+	public EProxyUI() {
+		this.isReferenceProvided = false;
+		this.display = (Display.getCurrent() == null) ? Display.getDefault()
+				: Display.getCurrent();
+		this.display.syncExec(new Runnable() {
+			@Override
+			public void run() {
+				EProxyUI.this.display();
+			}
+		});
+	}
+
 	public EProxyUI(EProxy reference) {
 		this.reference = reference;
+		this.isReferenceProvided = true;
 		this.display = (Display.getCurrent() == null) ? Display.getDefault()
 				: Display.getCurrent();
 		this.display.syncExec(new Runnable() {
@@ -111,7 +126,8 @@ public class EProxyUI {
 			this.initializeDialog();
 			this.addListenersToDialog();
 			this.createComponents();
-			this.displayReference();
+			if (isReferenceProvided)
+				this.displayReference();
 			this.addListenersToComponents();
 			this.open();
 		}
