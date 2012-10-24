@@ -2,6 +2,8 @@
 ##About
 eProxy is an Eclipse plugin which provides an user-friendly wizard in order to ease the proxy management inside Eclipse. 
 It allows to define quickly the HTTP and HTTPS proxy and the hosts to bypass directly from the workbench.
+##Preview
+![EProxy wizard](http://aneveux.github.com/eProxy/screenshot.png)
 ##License
 This library is licensed under the [New BSD License](http://www.opensource.org/licenses/bsd-license.php).
 ##Documentation
