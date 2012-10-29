@@ -32,7 +32,7 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package com.github.aneveux.eproxy.core;
+package com.github.aneveux.eproxy.api;
 
 import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.core.net.proxy.IProxyService;

@@ -34,7 +34,6 @@
  */
 package com.github.aneveux.eproxy.api;
 
-import com.github.aneveux.eproxy.core.ProxyHelper;
 import com.github.aneveux.eproxy.data.EProxy;
 import com.github.aneveux.eproxy.ui.EProxyUI;
 

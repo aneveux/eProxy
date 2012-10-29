@@ -12,6 +12,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.github.aneveux.eproxy,
  com.github.aneveux.eproxy.api,
- com.github.aneveux.eproxy.core,
  com.github.aneveux.eproxy.data,
  com.github.aneveux.eproxy.ui
