@@ -436,6 +436,10 @@ public class EProxyUI {
 					+ this.reference.getPort());
 			this.checkbox.setSelection(this.reference
 					.isAuthenticationRequired());
+			this.userText.setEnabled(this.reference.isAuthenticationRequired());
+			this.passwordText.setEnabled(this.reference
+					.isAuthenticationRequired());
+
 			this.userText
 					.setText(this.reference.getUser() != null ? this.reference
 							.getUser() : "");

@@ -86,13 +86,15 @@ public class ProxyHelper {
 		for (IProxyData data : proxyData) {
 			if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType())
 					|| IProxyData.HTTPS_PROXY_TYPE.equals(data.getType())) {
-				data.setHost(proxy.getHost());
-				data.setPort(proxy.getPort());
 				if (proxy.isAuthenticationRequired() && proxy.getUser() != null
 						&& proxy.getPassword() != null) {
 					data.setUserid(proxy.getUser());
 					data.setPassword(proxy.getPassword());
+				} else if (!proxy.isAuthenticationRequired()) {
+					data.disable();
 				}
+				data.setHost(proxy.getHost());
+				data.setPort(proxy.getPort());
 			}
 		}
 		proxyService.setSystemProxiesEnabled(false);
