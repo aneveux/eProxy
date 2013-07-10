@@ -2,7 +2,7 @@
 <feature
       id="com.github.aneveux.eproxy.feature"
       label="eProxy"
-      version="1.0.0.qualifier"
+      version="1.1.0.qualifier"
       provider-name="Antoine Neveux">
 
    <description url="http://aneveux.github.com/eProxy">
@@ -45,7 +45,7 @@ POSSIBILITY OF SUCH DAMAGE.
    </copyright>
 
    <license url="http://opensource.org/licenses/bsd-license.php">
-eProxy - An user friendly Eclipse plugin to manage easily your
+      eProxy - An user friendly Eclipse plugin to manage easily your
 proxy inside Eclipse
 Copyright (c) 2012, Antoine Neveux
 All rights reserved.
@@ -58,13 +58,13 @@ notice, this list of conditions and the following disclaimer.
 notice, this list of conditions and the following disclaimer
 in the
 documentation and/or other materials provided with the distribution.
-3. Neither the name of the project's author nor the names of
+3. Neither the name of the project&apos;s author nor the names of
 its
 contributors may be used to endorse or promote products derived
 from
 this software without specific prior written permission.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+&quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
 NOT
 LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
 FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE

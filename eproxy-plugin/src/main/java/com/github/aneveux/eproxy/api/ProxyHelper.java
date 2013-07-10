@@ -49,7 +49,7 @@ import com.github.aneveux.eproxy.data.EProxy;
  * get/set the proxy from Eclipse
  * 
  * @author Antoine Neveux
- * @version 1.0
+ * @version 1.1
  * 
  * @see IProxyService
  */
@@ -63,11 +63,12 @@ public class ProxyHelper {
 	 *         with the proxy configuration
 	 */
 	protected static IProxyService getProxyService() {
-		BundleContext bc = Activator.getDefault().getBundle()
+		final BundleContext bc = Activator.getDefault().getBundle()
 				.getBundleContext();
-		ServiceReference<?> serviceReference = bc
+		final ServiceReference<?> serviceReference = bc
 				.getServiceReference(IProxyService.class.getName());
-		IProxyService service = (IProxyService) bc.getService(serviceReference);
+		final IProxyService service = (IProxyService) bc
+				.getService(serviceReference);
 		return service;
 	}
 
@@ -80,31 +81,56 @@ public class ProxyHelper {
 	 *            an {@link EProxy} container to use in order to define
 	 *            Eclipse's proxy
 	 */
-	public static void defineProxy(EProxy proxy) {
-		IProxyService proxyService = getProxyService();
-		IProxyData[] proxyData = proxyService.getProxyData();
-		for (IProxyData data : proxyData) {
-			if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType())
-					|| IProxyData.HTTPS_PROXY_TYPE.equals(data.getType())) {
-				if (proxy.isAuthenticationRequired() && proxy.getUser() != null
-						&& proxy.getPassword() != null) {
-					data.setUserid(proxy.getUser());
-					data.setPassword(proxy.getPassword());
-				} else if (!proxy.isAuthenticationRequired()) {
-					data.disable();
+	public static void defineProxy(final EProxy proxy) {
+		if (!proxy.isEnabled())
+			clearProxy();
+		else {
+			final IProxyService proxyService = getProxyService();
+			final IProxyData[] proxyData = proxyService.getProxyData();
+			for (final IProxyData data : proxyData)
+				if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType())
+						|| IProxyData.HTTPS_PROXY_TYPE.equals(data.getType())) {
+					if (proxy.isAuthenticationRequired()
+							&& proxy.getUser() != null
+							&& proxy.getPassword() != null) {
+						data.setUserid(proxy.getUser());
+						data.setPassword(proxy.getPassword());
+					} else if (!proxy.isAuthenticationRequired())
+						data.disable();
+					data.setHost(proxy.getHost());
+					data.setPort(proxy.getPort());
 				}
-				data.setHost(proxy.getHost());
-				data.setPort(proxy.getPort());
+			proxyService.setSystemProxiesEnabled(false);
+			proxyService.setProxiesEnabled(true);
+			try {
+				proxyService.setProxyData(proxyData);
+				if (proxy.getNonProxyHosts() != null
+						&& proxy.getNonProxyHosts().length > 0)
+					proxyService.setNonProxiedHosts(proxy.getNonProxyHosts());
+			} catch (final CoreException e) {
+				Activator.sendErrorToErrorLog(
+						"Error while trying to define the proxy...", e);
 			}
 		}
-		proxyService.setSystemProxiesEnabled(false);
-		proxyService.setProxiesEnabled(true);
+	}
+
+	/**
+	 * Allows to clear the proxy settings and deactivate it, so native
+	 * connection will be used instead
+	 * 
+	 * @since 1.1
+	 */
+	public static void clearProxy() {
+		final IProxyService proxyService = getProxyService();
+		final IProxyData[] proxyData = proxyService.getProxyData();
+		for (final IProxyData data : proxyData)
+			data.disable();
+		proxyService.setSystemProxiesEnabled(true);
+		proxyService.setProxiesEnabled(false);
 		try {
 			proxyService.setProxyData(proxyData);
-			if (proxy.getNonProxyHosts() != null
-					&& proxy.getNonProxyHosts().length > 0)
-				proxyService.setNonProxiedHosts(proxy.getNonProxyHosts());
-		} catch (CoreException e) {
+			proxyService.setNonProxiedHosts(new String[0]);
+		} catch (final CoreException e) {
 			Activator.sendErrorToErrorLog(
 					"Error while trying to define the proxy...", e);
 		}
@@ -118,11 +144,11 @@ public class ProxyHelper {
 	 *         configuration for the HTTP proxy
 	 */
 	public static EProxy getProxyInformation() {
-		EProxy proxy = new EProxy();
+		final EProxy proxy = new EProxy();
 		proxy.setReference("HTTP-" + System.currentTimeMillis());
-		IProxyService proxyService = getProxyService();
-		IProxyData[] proxyData = proxyService.getProxyData();
-		for (IProxyData data : proxyData) {
+		final IProxyService proxyService = getProxyService();
+		final IProxyData[] proxyData = proxyService.getProxyData();
+		for (final IProxyData data : proxyData)
 			if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType())) {
 				proxy.setHost(data.getHost());
 				proxy.setPort(data.getPort());
@@ -130,8 +156,9 @@ public class ProxyHelper {
 				proxy.setUser(data.getUserId());
 				proxy.setPassword(data.getPassword());
 			}
-		}
 		proxy.setNonProxyHosts(proxyService.getNonProxiedHosts());
+		proxy.setIsEnabled(!(proxy.getHost() == null || proxy.getHost()
+				.length() == 0));
 		return proxy;
 	}
 

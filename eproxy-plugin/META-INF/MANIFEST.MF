@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Easy Proxy
 Bundle-SymbolicName: com.github.aneveux.eproxy;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: com.github.aneveux.eproxy.Activator
 Bundle-Vendor: Antoine Neveux
 Require-Bundle: org.eclipse.ui,

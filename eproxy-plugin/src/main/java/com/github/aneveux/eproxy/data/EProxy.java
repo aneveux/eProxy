@@ -42,7 +42,7 @@ import java.util.List;
  * order to describe a Proxy
  * 
  * @author Antoine Neveux
- * @version 1.0
+ * @version 1.1
  * 
  */
 public class EProxy {
@@ -52,6 +52,12 @@ public class EProxy {
 	 * needed
 	 */
 	protected String reference;
+	
+	/**
+	 * Allows to define if the proxy is enabled or not
+	 * @since 1.1
+	 */
+	protected boolean isEnabled;
 
 	/**
 	 * Proxy host (Captain Obvious !)
@@ -96,6 +102,24 @@ public class EProxy {
 		this.port = 0;
 		this.authenticationRequired = false;
 		this.nonProxyHosts = new String[0];
+		this.isEnabled = false;
+	}
+	
+	/**
+	 * @since 1.1
+	 * @return if the proxy is enabled or not
+	 */
+	public boolean isEnabled() {
+		return this.isEnabled;
+	}
+	
+	/**
+	 * @since 1.1
+	 * @param isEnabled true if the proxy should be enabled
+	 */
+	public EProxy setIsEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+		return this;
 	}
 
 	/**
