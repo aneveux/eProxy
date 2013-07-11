@@ -2,7 +2,7 @@
 <feature
       id="com.github.aneveux.eproxy.feature"
       label="eProxy"
-      version="1.1.0.qualifier"
+      version="1.2.0.qualifier"
       provider-name="Antoine Neveux">
 
    <description url="http://aneveux.github.com/eProxy">

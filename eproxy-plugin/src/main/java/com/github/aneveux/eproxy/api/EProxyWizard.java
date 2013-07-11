@@ -52,7 +52,7 @@ import com.github.aneveux.eproxy.ui.EProxyUI;
  * </p>
  * 
  * @author Antoine Neveux
- * @version 1.1
+ * @version 1.0
  * 
  */
 public class EProxyWizard {
@@ -64,10 +64,8 @@ public class EProxyWizard {
 	 */
 	public static void invokeEmptyWizard() {
 		EProxyUI ui = new EProxyUI();
-		if (ui.isProxyEnabled() && ui.getResult() != null)
+		if (ui.getResult() != null)
 			ProxyHelper.defineProxy(ui.getResult());
-		else if (!ui.isProxyEnabled())
-			ProxyHelper.clearProxy();
 	}
 
 	/**
@@ -78,10 +76,8 @@ public class EProxyWizard {
 	 */
 	public static void invokeDefaultWizard() {
 		EProxyUI ui = new EProxyUI(ProxyHelper.getProxyInformation());
-		if (ui.isProxyEnabled() && ui.getResult() != null)
+		if (ui.getResult() != null)
 			ProxyHelper.defineProxy(ui.getResult());
-		else if (!ui.isProxyEnabled())
-			ProxyHelper.clearProxy();
 	}
 
 	/**
@@ -98,10 +94,8 @@ public class EProxyWizard {
 	 */
 	public static void invokeWizard(EProxy defaultConfiguration) {
 		EProxyUI ui = new EProxyUI(defaultConfiguration);
-		if (ui.isProxyEnabled() && ui.getResult() != null)
+		if (ui.getResult() != null)
 			ProxyHelper.defineProxy(ui.getResult());
-		else if (!ui.isProxyEnabled())
-			ProxyHelper.clearProxy();
 	}
 
 }

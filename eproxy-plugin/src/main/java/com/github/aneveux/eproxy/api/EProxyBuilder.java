@@ -46,7 +46,7 @@ import com.github.aneveux.eproxy.data.EProxy;
  * order to get your object.
  * 
  * @author Antoine Neveux
- * @version 1.1
+ * @version 1.0
  * 
  * @see EProxy
  * 
@@ -84,20 +84,6 @@ public class EProxyBuilder {
 	 */
 	public EProxyBuilder withReference(String reference) {
 		this.result.setReference(reference);
-		return this;
-	}
-
-	/**
-	 * Allows to define the host of your {@link EProxy} instance
-	 * 
-	 * @see EProxy#setIsEnabled(boolean)
-	 * @param isEnabled
-	 *            {@link boolean} : true if the proxy should be enabled
-	 * @return the current {@link EProxyBuilder}
-	 * @since 1.1
-	 */
-	public EProxyBuilder withEnabled(boolean isEnabled) {
-		this.result.setIsEnabled(isEnabled);
 		return this;
 	}
 

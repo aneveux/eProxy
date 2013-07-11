@@ -60,7 +60,7 @@ import com.github.aneveux.eproxy.data.EProxy;
  * an {@link EProxy} object
  * 
  * @author Antoine Neveux
- * @version 1.1
+ * @version 1.0
  * 
  */
 public class EProxyUI {
@@ -84,13 +84,6 @@ public class EProxyUI {
 	 * Is used during the wizard execution in order to know when to close it
 	 */
 	private boolean keepOpen = true;
-
-	/**
-	 * Allows to set if the proxy should be disabled
-	 * 
-	 * @since 1.1
-	 */
-	protected Button enabled;
 
 	/**
 	 * {@link Label} to ask for the proxy host and port
@@ -173,23 +166,6 @@ public class EProxyUI {
 	 */
 	public EProxy getResult() {
 		return result;
-	}
-
-	/**
-	 * Allows to store if the proxy is enabled or not
-	 * 
-	 * @since 1.1
-	 */
-	protected boolean isProxyEnabled = false;
-
-	/**
-	 * Allows to know if the proxy has been enabled or not
-	 * 
-	 * @since 1.1
-	 * @return true if proxy is enabled.
-	 */
-	public boolean isProxyEnabled() {
-		return isProxyEnabled;
 	}
 
 	/**
@@ -329,30 +305,6 @@ public class EProxyUI {
 	 * also a few validation on {@link #proxyText}
 	 */
 	protected void addListenersToComponents() {
-		enabled.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				isProxyEnabled = enabled.getSelection();
-				proxyText.setEnabled(isProxyEnabled);
-				checkbox.setEnabled(isProxyEnabled);
-				userText.setEnabled(isProxyEnabled);
-				passwordText.setEnabled(isProxyEnabled);
-				nonProxyHostsText.setEnabled(isProxyEnabled);
-				if (!isProxyEnabled)
-					save.setEnabled(true);
-				else {
-					save.setEnabled(!(proxyText.getText() == null
-							|| !proxyText.getText().contains(":") || proxyText
-							.getText().split(":").length != 2));
-					userText.setEnabled(checkbox.getSelection());
-					passwordText.setEnabled(checkbox.getSelection());
-				}
-			}
-
-			@Override
-			public void widgetDefaultSelected(final SelectionEvent e) {
-			}
-		});
 		proxyText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(final ModifyEvent e) {
@@ -391,19 +343,16 @@ public class EProxyUI {
 		save.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				if (isProxyEnabled) {
-					result = new EProxy();
-					result.setIsEnabled(isProxyEnabled);
-					result.setHost(proxyText.getText().split(":")[0]);
-					result.setPort(Integer.parseInt(proxyText.getText().split(
-							":")[1]));
-					result.setAuthenticationRequired(checkbox.getSelection());
-					if (checkbox.getSelection()) {
-						result.setUser(userText.getText());
-						result.setPassword(passwordText.getText());
-					}
-					result.setNonProxyHosts(nonProxyHostsText.getText());
+				result = new EProxy();
+				result.setHost(proxyText.getText().split(":")[0]);
+				result.setPort(Integer
+						.parseInt(proxyText.getText().split(":")[1]));
+				result.setAuthenticationRequired(checkbox.getSelection());
+				if (checkbox.getSelection()) {
+					result.setUser(userText.getText());
+					result.setPassword(passwordText.getText());
 				}
+				result.setNonProxyHosts(nonProxyHostsText.getText());
 				EProxyUI.this.close();
 			}
 
@@ -418,12 +367,9 @@ public class EProxyUI {
 	 * {@link FormDataBuilder} in order to deal with the Layout
 	 */
 	protected void createComponents() {
-		enabled = new Button(shell, SWT.CHECK);
-		enabled.setText("Enable proxy");
-		new FormDataBuilder().top().horizontal().apply(enabled);
 		proxy = new Label(shell, SWT.NONE);
 		proxy.setText("Proxy: (host:port)");
-		new FormDataBuilder().top(enabled).horizontal().apply(proxy);
+		new FormDataBuilder().top().horizontal().apply(proxy);
 		proxyText = new Text(shell, SWT.BORDER);
 		proxyText
 				.setToolTipText("Define proxy following this syntax: host:port");
@@ -470,28 +416,22 @@ public class EProxyUI {
 	 */
 	protected void displayReference() {
 		if (reference != null) {
-			enabled.setSelection(reference.isEnabled());
-			isProxyEnabled = reference.isEnabled();
-			if (isProxyEnabled) {
-				proxyText.setText(reference.getHost() + ":"
-						+ reference.getPort());
-				checkbox.setSelection(reference.isAuthenticationRequired());
-				userText.setEnabled(reference.isAuthenticationRequired());
-				passwordText.setEnabled(reference.isAuthenticationRequired());
+			proxyText.setText(reference.getHost() + ":" + reference.getPort());
+			checkbox.setSelection(reference.isAuthenticationRequired());
+			userText.setEnabled(reference.isAuthenticationRequired());
+			passwordText.setEnabled(reference.isAuthenticationRequired());
 
-				userText.setText(reference.getUser() != null ? reference
-						.getUser() : "");
-				passwordText
-						.setText(reference.getPassword() != null ? reference
-								.getPassword() : "");
-				if (reference.getNonProxyHosts() != null
-						&& reference.getNonProxyHosts().length > 0) {
-					String nonProxyHosts = new String();
-					for (final String s : reference.getNonProxyHosts())
-						nonProxyHosts += s + ",";
-					nonProxyHostsText.setText(nonProxyHosts.substring(0,
-							nonProxyHosts.length() - 1));
-				}
+			userText.setText(reference.getUser() != null ? reference.getUser()
+					: "");
+			passwordText.setText(reference.getPassword() != null ? reference
+					.getPassword() : "");
+			if (reference.getNonProxyHosts() != null
+					&& reference.getNonProxyHosts().length > 0) {
+				String nonProxyHosts = new String();
+				for (final String s : reference.getNonProxyHosts())
+					nonProxyHosts += s + ",";
+				nonProxyHostsText.setText(nonProxyHosts.substring(0,
+						nonProxyHosts.length() - 1));
 			}
 		}
 	}

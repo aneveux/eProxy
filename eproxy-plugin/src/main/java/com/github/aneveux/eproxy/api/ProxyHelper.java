@@ -49,7 +49,7 @@ import com.github.aneveux.eproxy.data.EProxy;
  * get/set the proxy from Eclipse
  * 
  * @author Antoine Neveux
- * @version 1.1
+ * @version 1.2
  * 
  * @see IProxyService
  */
@@ -82,35 +82,30 @@ public class ProxyHelper {
 	 *            Eclipse's proxy
 	 */
 	public static void defineProxy(final EProxy proxy) {
-		if (!proxy.isEnabled())
-			clearProxy();
-		else {
-			final IProxyService proxyService = getProxyService();
-			final IProxyData[] proxyData = proxyService.getProxyData();
-			for (final IProxyData data : proxyData)
-				if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType())
-						|| IProxyData.HTTPS_PROXY_TYPE.equals(data.getType())) {
-					if (proxy.isAuthenticationRequired()
-							&& proxy.getUser() != null
-							&& proxy.getPassword() != null) {
-						data.setUserid(proxy.getUser());
-						data.setPassword(proxy.getPassword());
-					} else if (!proxy.isAuthenticationRequired())
-						data.disable();
-					data.setHost(proxy.getHost());
-					data.setPort(proxy.getPort());
-				}
-			proxyService.setSystemProxiesEnabled(false);
-			proxyService.setProxiesEnabled(true);
-			try {
-				proxyService.setProxyData(proxyData);
-				if (proxy.getNonProxyHosts() != null
-						&& proxy.getNonProxyHosts().length > 0)
-					proxyService.setNonProxiedHosts(proxy.getNonProxyHosts());
-			} catch (final CoreException e) {
-				Activator.sendErrorToErrorLog(
-						"Error while trying to define the proxy...", e);
+		final IProxyService proxyService = getProxyService();
+		final IProxyData[] proxyData = proxyService.getProxyData();
+		for (final IProxyData data : proxyData)
+			if (IProxyData.HTTP_PROXY_TYPE.equals(data.getType())
+					|| IProxyData.HTTPS_PROXY_TYPE.equals(data.getType())) {
+				if (proxy.isAuthenticationRequired() && proxy.getUser() != null
+						&& proxy.getPassword() != null) {
+					data.setUserid(proxy.getUser());
+					data.setPassword(proxy.getPassword());
+				} else if (!proxy.isAuthenticationRequired())
+					data.disable();
+				data.setHost(proxy.getHost());
+				data.setPort(proxy.getPort());
 			}
+		proxyService.setSystemProxiesEnabled(false);
+		proxyService.setProxiesEnabled(true);
+		try {
+			proxyService.setProxyData(proxyData);
+			if (proxy.getNonProxyHosts() != null
+					&& proxy.getNonProxyHosts().length > 0)
+				proxyService.setNonProxiedHosts(proxy.getNonProxyHosts());
+		} catch (final CoreException e) {
+			Activator.sendErrorToErrorLog(
+					"Error while trying to define the proxy...", e);
 		}
 	}
 
@@ -157,8 +152,6 @@ public class ProxyHelper {
 				proxy.setPassword(data.getPassword());
 			}
 		proxy.setNonProxyHosts(proxyService.getNonProxiedHosts());
-		proxy.setIsEnabled(!(proxy.getHost() == null || proxy.getHost()
-				.length() == 0));
 		return proxy;
 	}
 
